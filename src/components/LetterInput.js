@@ -32,11 +32,13 @@ const LetterInput = ({ props }) => {
     }
 
     useEffect(() => {
-        console.log(props.id === props.focusedInput[0] && props.focusedRow)
         if (props.id === props.focusedInput[0] && props.focusedRow) {
             setInputValue(buttonPressed)
+            props.setFocusedInput(prevFocusedInput => {
+                return [prevFocusedInput[0] + 1, 0]
+            })
           }
-    }, [])
+    }, [buttonPressed])
 
     return (
         <Input
@@ -45,9 +47,7 @@ const LetterInput = ({ props }) => {
             type="text"
             maxLength={1}
             disabled={true}
-            onChange={changeHandler}
             $inputState={determineInputState()}
-            buttonPressed={buttonPressed}
         />
     )
 }

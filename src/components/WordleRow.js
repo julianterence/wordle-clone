@@ -1,8 +1,10 @@
 import LetterInput from './LetterInput';
 import { useState, useEffect } from 'react'
 
-const WordleRow = (props) => {
-    const wordleArray = props.wordToGuess.split("")
+const WordleRow = ({props}) => {
+    const {id: rowId, wordToGuess, buttonPressed, focusedInput, setFocusedInput} = props
+    const wordleArray = wordToGuess.split("")
+
     const [disableInputs, setDisableInputs] = useState(false);
     const [isFocused, setIsFocused] = useState(false)
 
@@ -12,7 +14,7 @@ const WordleRow = (props) => {
 
     useEffect(() => {
         setIsFocused(prevFocused => (
-            props.id === props.focusedInput[1] ? true : false
+            rowId === focusedInput[1] ? true : false
         ))
     }, [])
 
@@ -21,14 +23,15 @@ const WordleRow = (props) => {
             {
                 wordleArray.map((letter, key) => (
                     <LetterInput key={key} props={{
-                        rowId: props.id,
+                        rowId,
                         id: key,
                         disabled: disableInputs,
                         letter: letter,
-                        wordToGuess: props.wordToGuess,
-                        buttonPressed: props.buttonPressed,
+                        wordToGuess,
+                        buttonPressed,
                         focusedRow: isFocused,
-                        focusedInput: props.focusedInput
+                        focusedInput,
+                        setFocusedInput
                     }}
                     />
                 ))
