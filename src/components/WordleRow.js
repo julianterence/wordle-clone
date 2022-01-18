@@ -16,7 +16,7 @@ const WordleRow = ({props}) => {
         setIsFocused(prevFocused => (
             rowId === focusedInput[1] ? true : false
         ))
-    }, [])
+    }, [focusedInput])
 
     return (
         <div>

@@ -35,7 +35,7 @@ const LetterInput = ({ props }) => {
         if (props.id === props.focusedInput[0] && props.focusedRow) {
             setInputValue(buttonPressed)
             props.setFocusedInput(prevFocusedInput => {
-                return [prevFocusedInput[0] + 1, 0]
+                return [prevFocusedInput[0] + 1, prevFocusedInput[1]]
             })
           }
     }, [buttonPressed])

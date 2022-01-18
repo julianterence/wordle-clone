@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "World Clone",
+  "name": "A humble clone of a great game",
   "icons": [
     {
       "src": "favicon.ico",
