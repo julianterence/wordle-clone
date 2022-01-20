@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 function App() {
 	const WORD_TO_GUESS = word.toUpperCase()
 	const ROWS_TO_GUESS = 6
+	
 	const wordleRows = []
 
 	// keep track of last keyboard click
@@ -31,9 +32,7 @@ function App() {
 	}
 
 	function newRow() {
-		console.log('in new row')
 		if(focusedInput[0] === 5) {
-		console.log('in new row step 1')
 			setFocusedInput(prevFocusedInput => {
 				return [0, prevFocusedInput[1] + 1]
 			})

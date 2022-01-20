@@ -17,13 +17,7 @@ function KeyboardComponent(props) {
     }
 
     const onKeyPress = (button) => {
-        console.log("Button pressed", button);
-        if(button === "{enter}") {
-            console.log('entered')
-            props.newRow();
-        } else {
-            props.setButtonPressed(button);
-        }
+        button === "{enter}" ? props.newRow() : props.setButtonPressed(button)
     }
 
     return (
