@@ -4,51 +4,47 @@ import KeyboardComponent from "./components/Keyboard"
 import './App.css';
 import { useState, useEffect } from 'react'
 
-
 function App() {
-	const WORD_TO_GUESS = word.toUpperCase()
+	const WORD_TO_GUESS = word
+	const wordleArray = WORD_TO_GUESS.split('')
 	const ROWS_TO_GUESS = 6
-	
-	const wordleRows = []
+	let wordleRowArray = []
 
-	// keep track of last keyboard click
-	const [buttonPressed, setButtonPressed] = useState('')
-	// keep track of current input
-	const [focusedInput, setFocusedInput] = useState([0, 0])
+	const [inputValue, setInputValue] = useState('')
+	const [inputIndex, setInputIndex] = useState(0)
+	const [rowIndex, setRowIndex] = useState(0)
+	const [evaluateRow, setEvaluateRow] = useState(false)
+
+	useEffect(() => {
+		console.log(WORD_TO_GUESS)
+	}, []);
 
 	for (let i = 0; i < ROWS_TO_GUESS; i++) {
-		wordleRows.push(
+		wordleRowArray.push(
 			<WordleRow
 				key={i}
 				props={{
-					id: i,
-					wordToGuess: WORD_TO_GUESS,
-					buttonPressed,
-					focusedInput,
-					setFocusedInput
+					wordleArray,
+					value: inputValue,
+					inputIndex,
+					setInputIndex,
+					correctWord: WORD_TO_GUESS,
+					setInputValue,
+					rowId: i,
+					rowIndex,
+					evaluateRow,
+					setEvaluateRow
 				}}
 			/>
 		)
 	}
 
-	function newRow() {
-		if(focusedInput[0] === 5) {
-			setFocusedInput(prevFocusedInput => {
-				return [0, prevFocusedInput[1] + 1]
-			})
-		}
-	}
-
-	useEffect(() => {
-		console.log(WORD_TO_GUESS)
-	}, [])
-
 	return (
 		<main>
-			{wordleRows}
-			<KeyboardComponent setButtonPressed={setButtonPressed} newRow={newRow} />
+			{wordleRowArray}
+			<KeyboardComponent props={{ setInputValue, setInputIndex, setRowIndex, inputIndex, setEvaluateRow }} />
 		</main>
-	);
+	)
 }
 
-export default App;
+export default App

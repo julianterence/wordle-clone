@@ -2,43 +2,43 @@ import { useState, useEffect, useRef } from "react"
 import { Input } from "../styledComponents/LetterInput"
 
 const LetterInput = ({ props }) => {
+    const { requiredLetter, keyboardInput, activeInput, WORD_TO_GUESS, inputIndex, setInputIndex } = props;
+
     const [inputValue, setInputValue] = useState('')
     const [isCorrect, setIsCorrect] = useState(false)
     const [isWrongPlace, setIsWrongPlace] = useState(false)
-    const [isFocused, setIsFocused] = useState(props.id === props.focusedInput[0] && props.focusedRow)
+    const [isIncorrect, setIsIncorrect] = useState(false)
+    
     const inputElement = useRef(null);
-    const requiredLetter = props.letter
-    const requiredWord = props.wordToGuess
-    const { buttonPressed } = props
 
-    const changeHandler = (event) => {
-        const { value } = event.target
-        console.log(value)
-        // const upperCaseValue = value.toUpperCase()
-
-        // setInputValue(upperCaseValue)
-        // checkLetter(upperCaseValue)
-    }
-
-    const checkLetter = (letter) => {
-        setIsCorrect(letter === requiredLetter)
-        setIsWrongPlace(requiredWord.includes(letter) && letter !== requiredLetter)
-    }
-
-    const determineInputState = () => {
-        if (props.disabled) {
-            return isCorrect ? 'correct' : isWrongPlace ? 'placement' : 'incorrect'
+    // compare user input to required letter
+    const determineInputState = (inputValue) => {
+        if (inputValue === requiredLetter) {
+            setIsCorrect(true)
+            setIsWrongPlace(false)
+            setIsIncorrect(false)
+        } else if (WORD_TO_GUESS.includes(inputValue)) {
+            setIsCorrect(false)
+            setIsWrongPlace(true)
+            setIsIncorrect(false)
+        } else if (inputValue !== requiredLetter) {
+            setIsCorrect(false)
+            setIsWrongPlace(false)
+            setIsIncorrect(true)
+        } else {
+            setIsCorrect(false)
+            setIsWrongPlace(false)
+            setIsIncorrect(false)
         }
     }
 
     useEffect(() => {
-        if (props.id === props.focusedInput[0] && props.focusedRow) {
-            setInputValue(buttonPressed)
-            props.setFocusedInput(prevFocusedInput => {
-                return [prevFocusedInput[0] + 1, prevFocusedInput[1]]
-            })
-          }
-    }, [buttonPressed])
+        if (activeInput) {
+            setInputValue(keyboardInput)
+            setInputIndex(prevInputIndex => prevInputIndex + 1)
+            determineInputState(keyboardInput)
+        }
+    }, [keyboardInput])
 
     return (
         <Input
@@ -47,7 +47,6 @@ const LetterInput = ({ props }) => {
             type="text"
             maxLength={1}
             disabled={true}
-            $inputState={determineInputState()}
         />
     )
 }

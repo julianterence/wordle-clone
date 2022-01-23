@@ -1,42 +1,41 @@
-import LetterInput from './LetterInput';
-import { useState, useEffect } from 'react'
+import React from "react"
+import WordleInput from "./WordleInput"
 
-const WordleRow = ({props}) => {
-    const {id: rowId, wordToGuess, buttonPressed, focusedInput, setFocusedInput} = props
-    const wordleArray = wordToGuess.split("")
-
-    const [disableInputs, setDisableInputs] = useState(false);
-    const [isFocused, setIsFocused] = useState(false)
-
-    const clickHandler = event => {
-        setDisableInputs(true)
-    }
-
-    useEffect(() => {
-        setIsFocused(prevFocused => (
-            rowId === focusedInput[1] ? true : false
-        ))
-    }, [focusedInput])
+const WordleRow = ({ props }) => {
+    const {
+        wordleArray,
+        value,
+        inputIndex,
+        setInputIndex,
+        correctWord,
+        setInputValue,
+        rowId,
+        rowIndex,
+        evaluateRow,
+        setEvaluateRow
+    } = props;
 
     return (
         <div>
             {
-                wordleArray.map((letter, key) => (
-                    <LetterInput key={key} props={{
-                        rowId,
-                        id: key,
-                        disabled: disableInputs,
-                        letter: letter,
-                        wordToGuess,
-                        buttonPressed,
-                        focusedRow: isFocused,
-                        focusedInput,
-                        setFocusedInput
-                    }}
-                    />
-                ))
+                wordleArray.map((letter, key) =>
+                    <WordleInput
+                        key={key}
+                        props={{
+                            value,
+                            id: key,
+                            inputIndex,
+                            setInputIndex,
+                            correctLetter: letter,
+                            correctWord,
+                            setInputValue,
+                            rowId,
+                            rowIndex,
+                            evaluateRow,
+                            setEvaluateRow
+                        }}
+                    />)
             }
-            <button onClick={clickHandler}>Enter</button>
         </div>
     )
 }
