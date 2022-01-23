@@ -3,7 +3,11 @@ import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
 
 function KeyboardComponent({props}) {
-    const {setInputValue, setInputIndex, setRowIndex, inputIndex, setEvaluateRow} = props
+    const {
+        updateInputValue, 
+        newLine,
+        deleteLetter
+    } = props
     const keyboardTheme = 'keyboard-theme hg-theme-default'
     const keyboardLayout = {
         'default': [
@@ -19,20 +23,11 @@ function KeyboardComponent({props}) {
 
     const onKeyPress = (button) => {
         if(button === "{enter}") {
-            if(inputIndex === 5) {
-                setRowIndex(prevRowIndex => {
-                    return prevRowIndex < 6 ? prevRowIndex + 1 : prevRowIndex
-                })
-                setInputIndex(0)
-                setEvaluateRow(true)
-            }
+            newLine()
         } else if(button === "{bksp}") {
-            setInputValue('')
-            setInputIndex(prevInputIndex => {
-                return prevInputIndex > 0 ? prevInputIndex - 1 : 0
-            })
+            deleteLetter()
         } else {
-            setInputValue(button)
+            updateInputValue(button)
         }
     }
 

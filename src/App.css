@@ -12,3 +12,29 @@
 .hg-rows .hg-row:nth-of-type(2) {
   padding: 0 10px;
 }
+
+input {
+  margin: 2px;
+  border: solid 2px var(--input-border);
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 2rem;
+  appearance: none;
+  color: white;
+  background-color: transparent;
+  font-weight: bold;
+}
+
+input.input--correct {
+  background-color: var(--color-correct);
+  border-color: var(--color-correct);
+}
+input.input--placement {
+  background-color: var(--color-placement);
+  border-color: var(--color-placement);
+}
+input.input--incorrect {
+  background-color: var(--color-incorrect);
+  border-color: var(--color-incorrect);
+}

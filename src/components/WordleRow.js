@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import WordleInput from "./WordleInput"
 
 const WordleRow = ({ props }) => {
@@ -6,13 +6,13 @@ const WordleRow = ({ props }) => {
         wordleArray,
         value,
         inputIndex,
-        setInputIndex,
         correctWord,
-        setInputValue,
         rowId,
         rowIndex,
         evaluateRow,
-        setEvaluateRow
+        resetInputValue,
+        incrementInputIndex,
+        updateEvaluateRow
     } = props;
 
     return (
@@ -25,14 +25,14 @@ const WordleRow = ({ props }) => {
                             value,
                             id: key,
                             inputIndex,
-                            setInputIndex,
                             correctLetter: letter,
                             correctWord,
-                            setInputValue,
                             rowId,
                             rowIndex,
                             evaluateRow,
-                            setEvaluateRow
+                            resetInputValue,
+                            incrementInputIndex,
+                            updateEvaluateRow
                         }}
                     />)
             }

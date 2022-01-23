@@ -1,4 +1,3 @@
-import { Input } from "../styledComponents/LetterInput"
 import { useState, useEffect } from "react"
 
 function WordleInput({props}) {
@@ -11,28 +10,26 @@ function WordleInput({props}) {
         value: keyboardValue,
         id,
         inputIndex,
-        setInputIndex,
         correctLetter,
         correctWord,
-        setInputValue,
         rowId,
         rowIndex,
         evaluateRow,
-        setEvaluateRow
+        resetInputValue,
+        incrementInputIndex,
+        updateEvaluateRow
     } = props
 
     const activeInput = inputIndex === id
     const activeRow = rowId === rowIndex
-    const inputEvaluation = isCorrect ? 'correct' : isWrongPlace ? 'placement' : 'incorrect'
+    const inputEvaluation = isCorrect ? 'input--correct' : isWrongPlace ? 'input--placement' : 'input--incorrect'
 
     useEffect(() => {
         if (value !== keyboardValue && activeRow) {
             if (activeInput) {
                 setValue(keyboardValue)
-                setInputIndex((prevIndex) => {
-                    return prevIndex < 5 ? prevIndex + 1 : prevIndex
-                })
-                setInputValue('')
+                incrementInputIndex()
+                resetInputValue()
             }
         }
     }, [keyboardValue]);
@@ -61,18 +58,15 @@ function WordleInput({props}) {
     useEffect(() => {
       if(evaluateRow && rowId === (rowIndex - 1)) {
         setEvaluateInput(true)
-        setEvaluateRow(false)
+        updateEvaluateRow(false)
       }
     }, [evaluateRow]);
     
-
-
-
     return (
-        <Input
+        <input
             value={value}
             disabled
-            $inputState={evaluateInput ? inputEvaluation : null}
+            className={evaluateInput ? inputEvaluation : null}
         />
     )
 }
