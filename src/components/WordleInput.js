@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react"
+import { motion, useAnimation } from "framer-motion"
 
-function WordleInput({props}) {
+function WordleInput({ props }) {
     const [value, setValue] = useState('')
     const [isCorrect, setIsCorrect] = useState(false)
     const [isWrongPlace, setIsWrongPlace] = useState(false)
     const [evaluateInput, setEvaluateInput] = useState(false)
+
+    const controls = useAnimation()
 
     const {
         value: keyboardValue,
@@ -57,18 +60,32 @@ function WordleInput({props}) {
         updateCompletedWord(value, id)
     }, [value]);
 
+    const revealSequence = () => {
+        controls.start({
+            rotateX: [0, -90, 0],
+            transition: { delay: id * 0.5 }
+        })
+        controls.start({ 
+            backgroundColor: isCorrect ? ["#121213", "#121213", "#f5793a"] : "#121213",
+            borderColor: isCorrect ? ["#121213", "#121213", "#f5793a"] : "#121213",
+            transition: { delay: id * 0.7, times: [0, 0.5, 1] }
+        })
+    }
+
     useEffect(() => {
-      if(evaluateRow && rowId === (rowIndex - 1)) {
-        setEvaluateInput(true)
-        updateEvaluateRow(false)
-      }
+        if (evaluateRow && rowId === (rowIndex - 1)) {
+            setEvaluateInput(true)
+            updateEvaluateRow(false)
+            revealSequence()
+        }
     }, [evaluateRow]);
-    
+
     return (
-        <input
+        <motion.input
             value={value}
             disabled
             className={evaluateInput ? inputEvaluation : null}
+            animate={controls}
         />
     )
 }
