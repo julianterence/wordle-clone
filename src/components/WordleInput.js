@@ -17,7 +17,8 @@ function WordleInput({props}) {
         evaluateRow,
         resetInputValue,
         incrementInputIndex,
-        updateEvaluateRow
+        updateEvaluateRow,
+        updateCompletedWord
     } = props
 
     const activeInput = inputIndex === id
@@ -53,6 +54,7 @@ function WordleInput({props}) {
             setIsCorrect(false)
             setIsWrongPlace(false)
         }
+        updateCompletedWord(value, id)
     }, [value]);
 
     useEffect(() => {

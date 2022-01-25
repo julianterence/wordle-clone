@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import WordleInput from "./WordleInput"
 
 const WordleRow = ({ props }) => {
+    
     const {
         wordleArray,
         value,
@@ -12,7 +13,8 @@ const WordleRow = ({ props }) => {
         evaluateRow,
         resetInputValue,
         incrementInputIndex,
-        updateEvaluateRow
+        updateEvaluateRow,
+        updateCompletedWord
     } = props;
 
     return (
@@ -32,7 +34,8 @@ const WordleRow = ({ props }) => {
                             evaluateRow,
                             resetInputValue,
                             incrementInputIndex,
-                            updateEvaluateRow
+                            updateEvaluateRow,
+                            updateCompletedWord
                         }}
                     />)
             }
