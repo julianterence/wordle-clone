@@ -4,7 +4,7 @@ import WordleInput from "./WordleInput"
 const WordleRow = ({ props }) => {
     
     const {
-        wordleArray,
+        WORD_TO_GUESS_ARRAY,
         value,
         inputIndex,
         correctWord,
@@ -20,7 +20,7 @@ const WordleRow = ({ props }) => {
     return (
         <div>
             {
-                wordleArray.map((letter, key) =>
+                WORD_TO_GUESS_ARRAY.map((letter, key) =>
                     <WordleInput
                         key={key}
                         props={{

@@ -3,18 +3,22 @@ import { word } from './data/allWords'
 import KeyboardComponent from "./components/Keyboard"
 import './App.css';
 import { useState, useEffect } from 'react'
+import { useNewWord } from './hooks/useNewWord'
+import Confetti from 'react-confetti'
 
 function App() {
-	const WORD_TO_GUESS = word.toUpperCase()
-	const wordleArray = WORD_TO_GUESS.split('')
-	const ROWS_TO_GUESS = 6
-	let wordleRowArray = []
+	const {
+		WORD_TO_GUESS,
+		WORD_TO_GUESS_ARRAY,
+		ROWS_TO_GUESS
+	} = useNewWord(6)
 
 	const [inputValue, setInputValue] = useState('')
 	const [inputIndex, setInputIndex] = useState(0)
 	const [rowIndex, setRowIndex] = useState(0)
 	const [evaluateRow, setEvaluateRow] = useState(false)
 	const [completedWord, setCompletedWord] = useState('xxxxx')
+	const [winner, setWinner] = useState(false)
 
     const updateCompletedWord = (letter, index) => {
         setCompletedWord(prevCompletedWord => {
@@ -56,7 +60,7 @@ function App() {
 			updateEvaluateRow(true)
 			setTimeout(() => {
 				if(completedWord === WORD_TO_GUESS) {
-					alert('Congrats!')
+					setWinner(true)
 				}
 			}, 500)
 		}
@@ -76,12 +80,13 @@ function App() {
 		console.log(WORD_TO_GUESS)
 	}, []);
 
+	let wordleRowArray = []
 	for (let i = 0; i < ROWS_TO_GUESS; i++) {
 		wordleRowArray.push(
 			<WordleRow
 				key={i}
 				props={{
-					wordleArray,
+					WORD_TO_GUESS_ARRAY,
 					value: inputValue,
 					inputIndex,
 					correctWord: WORD_TO_GUESS,
@@ -99,6 +104,7 @@ function App() {
 
 	return (
 		<main>
+			<Confetti run={winner}/>
 			{wordleRowArray}
 			<KeyboardComponent
 				props={{
